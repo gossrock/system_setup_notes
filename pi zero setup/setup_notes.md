@@ -146,4 +146,5 @@ connect to raspberry pi via ssh
 
 
 ## Todo:
--[ ] much of this is likely to be ablet to be automated 
+
+- [ ] much of this is likely to be ablet to be automated 

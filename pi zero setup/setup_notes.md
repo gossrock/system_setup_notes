@@ -95,6 +95,7 @@ Connect your micro-sd card to your computer somehow. (I insert it into a full si
     ```sudo nano /etc/network/interfaces```
 
 1. add the following lines
+
     ```
 auto wlan0
 allow-hotplug wlan0
@@ -105,6 +106,7 @@ iface wlan0 inet dhcp
   *[^R lets you insert a file at the curser position, do this with the psk saved in pass]*
 
 1. if you have an usb wired NIC include the following
+
 ```
 auto eth0
 allow-hotplug eth0
@@ -118,21 +120,24 @@ iface eth0 inet dhcp
 
 
 ### Update system
+
 ```
 sudo apt update
 sudo apt upgrade
 ```
 
 ### Install ssh
+
 ```
 sudo apt install ssh
 sudo update-rc.d ssh defaults
 sudo update-rc.d ssh enable
 ```
+
 restart pi zero
 
 ```sudo shutdown -r now```
 
- connect to raspberry pi via ssh
+connect to raspberry pi via ssh
 
 ```ssh username@192.0.2.100```

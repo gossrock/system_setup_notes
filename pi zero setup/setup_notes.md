@@ -104,7 +104,7 @@ Connect your micro-sd card to your computer somehow. (I insert it into a full si
         wpa-psk 0123456789abcdef0123456789abcdef0123456789abcdef0123456789abcdef
     ```
   
-  *[^R lets you insert a file at the curser position, do this with the psk saved in pass]*
+    *[^R lets you insert a file at the curser position, do this with the psk saved in pass]*
 
 1. if you have an usb wired NIC include the following
 

@@ -108,11 +108,11 @@ Connect your micro-sd card to your computer somehow. (I insert it into a full si
 
 1. if you have an usb wired NIC include the following
 
-```
-auto eth0
-allow-hotplug eth0
-iface eth0 inet dhcp
-```
+    ```
+    auto eth0
+    allow-hotplug eth0
+    iface eth0 inet dhcp
+    ```
 
 
 1. restart pi zero

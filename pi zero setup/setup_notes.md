@@ -97,12 +97,13 @@ Connect your micro-sd card to your computer somehow. (I insert it into a full si
 1. add the following lines
 
     ```
-auto wlan0
-allow-hotplug wlan0
-iface wlan0 inet dhcp
-    wpa-ssid "<SSID>"
-    wpa-psk 0123456789abcdef0123456789abcdef0123456789abcdef0123456789abcdef
-  ```
+    auto wlan0
+    allow-hotplug wlan0
+    iface wlan0 inet dhcp
+        wpa-ssid "<SSID>"
+        wpa-psk 0123456789abcdef0123456789abcdef0123456789abcdef0123456789abcdef
+    ```
+  
   *[^R lets you insert a file at the curser position, do this with the psk saved in pass]*
 
 1. if you have an usb wired NIC include the following

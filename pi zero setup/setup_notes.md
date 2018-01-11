@@ -144,7 +144,27 @@ connect to raspberry pi via ssh
 ```ssh username@192.0.2.100```
 
 
+### Other Helpful Utilities:
+
+screen:
+```
+sudo apt install -y screen
+```
+
+pip:
+```
+sudo apt install -y python3-pip
+```
+
+python3 venv
+
+```
+sudo apt install -y python3-venv
+```
+
+
+
 
 ## Todo:
 
-- [ ] much of this is likely to be ablet to be automated 
+- [ ] much of this is likely to be ablet to be automated

@@ -1,7 +1,12 @@
 # Headless Setup of a Raspberry Pi Zero W
 
 adapted from https://medium.com/@aallan/setting-up-a-headless-raspberry-pi-zero-3ded0b83f274
-and https://raspberrypi.stackexchange.com/questions/37920/how-do-i-set-up-networking-wifi-static-ip-address/37921#37921
+
+ https://raspberrypi.stackexchange.com/questions/37920/how-do-i-set-up-networking-wifi-static-ip-address/37921#37921
+
+ and
+
+ https://raspberrypi.stackexchange.com/questions/11631/how-to-setup-multiple-wifi-networks
 
 
 * ## Install Raspian Light image on SD card (see `pi zero setup/0_install_raspbian_on_sd_card_ubuntu.md`)
@@ -54,7 +59,7 @@ and https://raspberrypi.stackexchange.com/questions/37920/how-do-i-set-up-networ
            key_mgmt=WPA-PSK
           }
           ```
-      * varient 3 (multiple SSIDs):
+      * variant 3 (multiple SSIDs):
         * you can combine this one with variant 2
         * edit the wpa_supplicant.conf file on the boot partition like this:
           ```
@@ -77,3 +82,23 @@ and https://raspberrypi.stackexchange.com/questions/37920/how-do-i-set-up-networ
               }
 
           ```
+      * variant 4 (multiple static ip and dhcp):
+        * do valiant 3
+        * then on the `rootfs` partition edit `/etc/network/inerfaces` file:
+          ```
+          auto lo
+          iface lo inet loopback
+
+          allow-hotplug wlan0
+          iface wlan0 inet manual
+          wpa-roam /etc/wpa_supplicant/wpa_supplicant.conf
+
+          iface uniqueid1 inet static
+            address 192.168.0.100
+            gateway 192.168.0.1
+            netmask 255.255.255.0
+
+          iface uniqueid2 inet dhcp
+          ```
+        * make sure that the uniqueid1 and uniqueid2 match the `wpa_supplicant.conf` file
+        *

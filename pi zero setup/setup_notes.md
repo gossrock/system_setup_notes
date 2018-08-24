@@ -1,4 +1,8 @@
-# Setting up a Raspberry Pi Zero Server
+# Setting up a Raspberry Pi Zero W Server
+In this case we have no wired connection that can get us access quickly.
+We will have to connect manually to the network before then being able to ssh in.
+
+test again
 
 ## INSTALL RASPIAN ON SD CARD
 
@@ -7,7 +11,7 @@
 ```wget --trust-server-names https://downloads.raspberrypi.org/raspbian_lite_latest```
 
 ### Extract .zip
-```unzip 2017-11-29-raspbian-stretch-lite.zip ```
+```unzip 2018-06-27-raspbian-stretch-lite.zip ```
 
 *[replace name of file with the file that actually comes to you.]*
 
@@ -17,6 +21,8 @@ Connect your micro-sd card to your computer somehow. (I insert it into a full si
 1. Find the SD card:
 
     ``` df -h ```
+    or
+    ``` lsblk ```
 
     The SD card should be near the bottom.
 
@@ -37,26 +43,40 @@ Connect your micro-sd card to your computer somehow. (I insert it into a full si
 * connect monitor
 * connect keyboard
 * connect power
-* optional: connect Wired ethernet
 * boot device
 * log-in. *[username: pi password: raspberry]*
 
+
+
+
+
 ### initial setup
 
-#### (Optional) Configure keyboard for Dvorak input
-*[I'm weird]*
 
-```sudo dpkg-reconfigure keyboard-configuration```
+#### Get network access
+1. get hash of psk
 
-* choose "Generic 105-key (Intel) PC" [Default]
-* then choose "Other" [because all are English (UK)]
-* then choose "English (US)"
-* then choose "English (US) - English (Dvorak)"
-* then for "AltGr" choose "The default fro the keyboard layout"
-* then for "Compose key" choose "No compose key"
-* restart:
+    ```wpa_passphrase "<SSID>" "<psk>" > pass```
 
-    `sudo shutdown -r now`
+1. edit pass to contain only the psk value
+   ```nano pass```
+
+1. edit interfaces file
+
+    ```sudo nano /etc/network/interfaces```
+
+1. add the following lines
+
+    ```
+    auto wlan0
+    allow-hotplug wlan0
+    iface wlan0 inet dhcp
+        wpa-ssid "<SSID>"
+        wpa-psk 0123456789abcdef0123456789abcdef0123456789abcdef0123456789abcdef
+    ```
+
+    *[^R lets you insert a file at the curser position, do this with the psk saved in pass]*
+
 
 #### (optional) create new user and disable the default user
 1. add user
@@ -81,38 +101,10 @@ Connect your micro-sd card to your computer somehow. (I insert it into a full si
 
    ```mv /etc/sudoers.d/010_pi-nopasswd ~```
 
-#### Setup wifi networking
 
-1. get hash of psk
 
-    ```wpa_passphrase "<SSID>" "<psk>" > pass```
 
-1. edit pass to contain only the psk value
-   ```nano pass```
 
-1. edit interfaces file
-
-    ```sudo nano /etc/network/interfaces```
-
-1. add the following lines
-
-    ```
-    auto wlan0
-    allow-hotplug wlan0
-    iface wlan0 inet dhcp
-        wpa-ssid "<SSID>"
-        wpa-psk 0123456789abcdef0123456789abcdef0123456789abcdef0123456789abcdef
-    ```
-
-    *[^R lets you insert a file at the curser position, do this with the psk saved in pass]*
-
-1. if you have an usb wired NIC include the following
-
-    ```
-    auto eth0
-    allow-hotplug eth0
-    iface eth0 inet dhcp
-    ```
 
 
 1. restart pi zero

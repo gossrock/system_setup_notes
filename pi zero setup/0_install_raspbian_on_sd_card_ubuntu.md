@@ -64,7 +64,7 @@
 ```
 username@hostname$ cd ~/Downloads
 username@hostname$ wget https://downloads.raspberrypi.org/raspbian_lite_latest
-username@hostname$ uzip raspbian_lite_latest
+username@hostname$ unzip raspbian_lite_latest
 username@hostname$ ls *raspbian*
 2018-06-27-raspbian-stretch-lite.img
 username@hostname$ lsblk | grep disk

@@ -102,3 +102,13 @@ adapted from https://medium.com/@aallan/setting-up-a-headless-raspberry-pi-zero-
           ```
         * make sure that the uniqueid1 and uniqueid2 match the `wpa_supplicant.conf` file
         *
+* ## USB-OTG / link-local setup
+  * you will need to modify 2 files in the boot partition on the SD card
+    * in the `config.txt` file add the line `dtoverlay=dwc2`
+    * in the `cmdline.txt` file add `modules-load=dwc2,g_ether` just after `rootwait` (insure 1 space before and after)
+  * to connect with USB-OTG on Ubuntu-Mate you will need to
+    1. create an ethernet connection with 'IPv4' set to 'Link-local only'
+    2. plug the USB cable into the USB port labeled 'USB' (Not the one labeled 'PWR')
+    3. to obtain the ip address of the raspberry pi 0 run the command `avahi-resolve-host-name raspberrypi.local`
+      * it may take a bit to report an IPv4 address instead of an IPv6 address
+    4. after you see an IPv4 address you can now connect with 'ssh pi@raspberrypi.local' (you did put the empty 'ssh' file in the boot partition didn't you)

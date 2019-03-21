@@ -102,13 +102,69 @@ adapted from https://medium.com/@aallan/setting-up-a-headless-raspberry-pi-zero-
           ```
         * make sure that the uniqueid1 and uniqueid2 match the `wpa_supplicant.conf` file
         *
-* ## USB-OTG / link-local setup
+* ## USB-OTG / usb network setup
   * you will need to modify 2 files in the boot partition on the SD card
     * in the `config.txt` file add the line `dtoverlay=dwc2`
     * in the `cmdline.txt` file add `modules-load=dwc2,g_ether` just after `rootwait` (insure 1 space before and after)
   * to connect with USB-OTG on Ubuntu-Mate you will need to
-    1. create an ethernet connection with 'IPv4' set to 'Link-local only'
+    1. create an ethernet connection with 'IPv4' set to 'Shared to other computers'
     2. plug the USB cable into the USB port labeled 'USB' (Not the one labeled 'PWR')
     3. to obtain the ip address of the raspberry pi 0 run the command `avahi-resolve-host-name raspberrypi.local`
-      * it may take a bit to report an IPv4 address instead of an IPv6 address
-    4. after you see an IPv4 address you can now connect with 'ssh pi@raspberrypi.local' (you did put the empty 'ssh' file in the boot partition didn't you)
+        * it may take a bit to report an IPv4 address instead of an IPv6 address
+    4. after you see an IPv4 address you can now connect with 'ssh pi@raspberrypi.local' (you did put the empty 'ssh' 
+    file in the boot partition didn't you)
+  
+  
+ ## additional customizations
+ 
+ #### change host name of raspberry pi 0
+ 
+ 1. change the host name `raspberrypi` in `/etc/hostname` (on raspberry pi 0) to what you want it to be:
+    
+    ```sudo nano hostname```
+ 
+ 2. change the hostname to mach in `/etc/hosts` (on raspberry pi 0):
+ 
+    ``` sudo nano hosts```
+    
+ #### set usb ip address to be static
+ 1. edit '/etc/dhcpcd.conf' (on raspberry pi 0):
+ 
+    ```sudo nano /etc/dhcpcd.conf``` 
+ 
+ 1. add the following lines to `/etc/dhcpcd.conf` (or similar):
+
+    ```
+        ###### connection via usb ######
+        interface usb0
+        static ip_address=10.42.0.103 # 103 can be your choice in range 2-254
+        static routers=10.42.0.1
+
+    ```
+    
+  #### connect more conveniently to raspberry pi 0 (on ubuntu)
+  
+  1. set your username for ssh to the raspberry pi and remove the need for '.local' when using ssh
+  
+     1. edit `~/.ssh/config` (on your ubuntu host)
+     
+        `nano ~/.ssh/config`
+        
+     2. add the following lines to that file (changing the '[]' info to the appropriate info)
+     
+        ```
+            Host [raspberry pi host name]
+            HostName [raspberry pi host name].local
+            User [your user name on the raspberry pi]
+        ```
+  1. copy your ssh authorization key to pi so you no longer need to type your password 
+  from your ubuntu host:
+  
+     1. `ssh-copy-id [your user name on the raspberry pi]@[raspberry pi host name]`
+  
+  1. additionally you may want to add a line in your '/etc/hosts' (on your ubuntu host) 
+  so you can ping the host name or use the host name in your browser without '.local'
+  
+     1. `sudo nano /etc/hosts`
+     2. add the following line `10.42.0.103     [raspberry pi host name]`
+      
